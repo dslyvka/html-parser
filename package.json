@@ -1,0 +1,26 @@
+{
+  "name": "html-editor",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "codemirror": "^5.65.16",
+    "js-beautify": "^1.15.1",
+    "next": "14.2.4",
+    "react": "^18",
+    "react-codemirror2": "^8.0.0",
+    "react-dom": "^18",
+    "react-quill": "^2.0.0",
+    "react-transition-group": "^4.4.5",
+    "sass": "^1.77.5"
+  },
+  "devDependencies": {
+    "eslint": "^8",
+    "eslint-config-next": "14.2.4"
+  }
+}

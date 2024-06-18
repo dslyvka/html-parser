@@ -1,0 +1,41 @@
+/* Variables */
+$button-radius: 0.5rem;
+$button-color: #ffffff;
+$button-background: #313033;
+$button-border-color: #313033;
+$button-disabled-background: #555555;
+$button-disabled-color: #777777;
+$button-hover-background: lighten($button-background, 5%);
+$button-active-background: lighten($button-background, 10%);
+$button-transition-duration: 0.3s;
+
+.button {
+    margin-right: 5px;
+    display: inline-block;
+    height: 36px;
+    padding: 3px 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: $button-color;
+    background-color: $button-background;
+    border: 1px solid $button-border-color;
+    border-radius: $button-radius;
+    cursor: pointer;
+    transition: background-color $button-transition-duration ease, transform $button-transition-duration ease;
+
+    &:hover:not(:disabled) {
+        background-color: $button-hover-background;
+        transform: translateY(-2px);
+    }
+
+    &:active:not(:disabled) {
+        background-color: $button-active-background;
+        transform: translateY(0);
+    }
+
+    &:disabled {
+        background-color: $button-disabled-background;
+        color: $button-disabled-color;
+        cursor: not-allowed;
+    }
+}

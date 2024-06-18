@@ -1,0 +1,56 @@
+// .input {
+//     padding: 10px;
+//     font-size: 16px;
+//     border: 1px solid #ccc;
+//     border-radius: 4px;
+//     background-color: #f7f7f7;
+//     color: #333;
+//     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+//     width: 300px; 
+// }
+// styles.module.scss
+
+$input-border-radius: 0.5rem;
+$input-background: #313033;
+$input-border-color: #313033;
+$input-color: #ffffff;
+$input-disabled-background: #555555;
+$input-disabled-color: #777777;
+$input-hover-background: lighten($input-background, 5%);
+$input-active-background: lighten($input-background, 10%);
+$input-transition-duration: 0.3s;
+
+// styles.module.scss
+
+.input {
+    padding: 10px;
+    font-size: 14px; /* Сохраняем одинаковый размер шрифта как и у кнопки */
+    font-weight: 600; /* Поддерживаем жирность шрифта */
+    color: $input-color; /* Используем цвет текста кнопки */
+    background-color: $input-background; /* Используем цвет фона кнопки */
+    border: 1px solid $input-border-color; /* Используем цвет границы кнопки */
+    border-radius: $input-border-radius; /* Используем радиус скругления как у кнопки */
+    cursor: pointer; /* Используем указатель курсора */
+    transition: background-color $input-transition-duration ease, transform $input-transition-duration ease;
+
+    &:hover:not(:disabled) {
+        background-color: $input-hover-background;
+        transform: translateY(-2px);
+    }
+
+    &:active:not(:disabled) {
+        background-color: $input-active-background;
+        transform: translateY(0);
+    }
+
+    &:disabled {
+        background-color: $input-disabled-background;
+        color: $input-disabled-color;
+        cursor: not-allowed;
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 8px rgba(49, 48, 51, 0.4); /* Подобный эффект тени для фокуса, как у кнопки */
+    }
+}
