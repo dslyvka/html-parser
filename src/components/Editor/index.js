@@ -25,6 +25,9 @@ export const HtmlEditor = () => {
     const [linksChanged, setLinksChanged] = useState(false);
     const [showCopyPopup, setShowCopyPopup] = useState(false);
     const [isUrlHereLinks, setIsUrlHereLinks] = useState(false);
+    const [fontToReplace, setFontToReplace] = useState("");
+    const [fontReplaceTo, setFontReplaceTo] = useState("");
+    const [isFontsChanged, setIsFontsChanged] = useState(false);
 
     const fileInputRef = useRef(null);
 
@@ -66,12 +69,29 @@ export const HtmlEditor = () => {
     }, [htmlContent]);
 
     const onLinkChange = (e) => setLinkUrl(e.target.value);
+    const onFontToReplaceChange = (e) => setFontToReplace(e.target.value);
+    const onFontReplaceToChange = (e) => setFontReplaceTo(e.target.value);
 
     const changeLinks = () => {
         let updatedHtml = processedHtml.replace(/href="urlhere"/g, `href="${linkUrl}"`);
         setProcessedHtml(beautify.html(updatedHtml));
         setLinksChanged(true);
     };
+
+    const changeFonts = () => {
+        let regex = new RegExp(`${fontToReplace}`, 'g');
+        let updatedHtml = processedHtml.replace(regex, `${fontReplaceTo}`);
+        setProcessedHtml(beautify.html(updatedHtml));
+        setIsFontsChanged(true);
+    };
+
+    const revertToOriginalFonts = () => {
+        let regex = new RegExp(`${fontReplaceTo}`, 'g');
+        let updatedHtml = processedHtml.replace(regex, `${fontToReplace}`);
+        setProcessedHtml(beautify.html(updatedHtml));
+        setIsFontsChanged(false);
+    }
+    
 
     const onProcessHtml = () => {
         setOriginalHtml(htmlContent);
@@ -169,26 +189,55 @@ export const HtmlEditor = () => {
             <div style={{ display: "flex" }}>
                 <div style={{ flex: "0 0 auto", marginRight: "20px" }}>
                     {isUrlHereLinks && processedHtml && (
-                        <div style={{ margin: "10px 0", display: "flex" }}>
-                            <div className={inputStyles.textInputWrapper}>
-                                <input
-                                    className={inputStyles.textInput}
-                                    type="text"
-                                    placeholder="Enter link URL"
-                                    value={linkUrl}
-                                    onChange={onLinkChange}
-                                />
+                        <>
+                            <div style={{ margin: "10px 0", display: "flex" }}>
+                                <div className={inputStyles.textInputWrapper}>
+                                    <input
+                                        className={inputStyles.textInput}
+                                        type="text"
+                                        placeholder="Enter link URL"
+                                        value={linkUrl}
+                                        onChange={onLinkChange}
+                                    />
+                                </div>
+                                <Button onClick={changeLinks} disabled={!linkUrl || linksChanged}>
+                                    Change
+                                </Button>
+                                <Button
+                                    onClick={revertToOriginalLinks}
+                                    disabled={!linkUrl || !linksChanged}
+                                >
+                                    Return
+                                </Button>
                             </div>
-                            <Button onClick={changeLinks} disabled={!linkUrl || linksChanged}>
-                                Change
-                            </Button>
-                            <Button
-                                onClick={revertToOriginalLinks}
-                                disabled={!linkUrl || !linksChanged}
-                            >
-                                Return
-                            </Button>
-                        </div>
+                            <div style={{ margin: "10px 0", display: "flex" }}>
+                                <div className={inputStyles.textInputWrapper} style={{ display: "flex", rowGap: "10px", flexDirection: "column" }}>
+                                    <input
+                                        className={inputStyles.textInput}
+                                        type="text"
+                                        placeholder="Font to replace"
+                                        value={fontToReplace}
+                                        onChange={onFontToReplaceChange}
+                                    />
+                                    <input
+                                        className={inputStyles.textInput}
+                                        type="text"
+                                        placeholder="Replace font to"
+                                        value={fontReplaceTo}
+                                        onChange={onFontReplaceToChange}
+                                    />
+                                </div>
+                                <Button onClick={changeFonts} disabled={!fontToReplace || !fontReplaceTo || isFontsChanged}>
+                                    Change
+                                </Button>
+                                <Button
+                                    onClick={revertToOriginalFonts}
+                                    disabled={!fontToReplace || !fontReplaceTo || !isFontsChanged}
+                                >
+                                    Return
+                                </Button>
+                            </div>
+                        </>
                     )}
 
                     {!!imageUrls.length && processedHtml &&
