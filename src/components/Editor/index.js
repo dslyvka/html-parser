@@ -49,6 +49,9 @@ export const HtmlEditor = () => {
         setLinksChanged(false);
         setShowCopyPopup(false);
         setIsUrlHereLinks(false);
+        setFontReplaceTo(false);
+        setFontToReplace(false);
+        setIsFontsChanged(false);
     };
 
     const onHtmlChange = (event) => {
